@@ -8,17 +8,9 @@ import {
   Building2,
 } from 'lucide-react';
 
-// Para conectar una app: poner estado 'disponible' y su href (ver README.md).
+// Orden = el de los proyectos de Coolify (sin el numero). Para conectar una app: estado 'disponible' y su href
+// (ver README.md). `bloqueada: true` deja la tarjeta en Disponibles pero sin enlace: la app sigue accesible por URL.
 export const APPS = [
-  {
-    id: 'hrsm',
-    nombre: 'Recursos Humanos',
-    area: 'Gestión humana',
-    descripcion: 'Gestión del talento, personal y procesos de RR.HH.',
-    icono: Users,
-    estado: 'disponible',
-    href: '/hrsm/',
-  },
   {
     id: 'solicitudes',
     nombre: 'Solicitudes de Contratación',
@@ -27,6 +19,7 @@ export const APPS = [
     icono: FileSignature,
     estado: 'disponible',
     href: '/solicitudes/',
+    bloqueada: true, // sigue disponible (la ruta funciona entrando por URL), pero la tarjeta no abre la app
   },
   {
     id: 'cartera',
@@ -38,6 +31,15 @@ export const APPS = [
     href: '/cartera/',
   },
   {
+    id: 'hrsm',
+    nombre: 'Recursos Humanos',
+    area: 'Gestión humana',
+    descripcion: 'Gestión del talento, personal y procesos de RR.HH.',
+    icono: Users,
+    estado: 'disponible',
+    href: '/hrsm/',
+  },
+  {
     id: 'bases',
     nombre: 'Bases Presupuestales',
     area: 'Finanzas',
@@ -45,6 +47,7 @@ export const APPS = [
     icono: Calculator,
     estado: 'disponible',
     href: '/bases/',
+    bloqueada: true, // sigue disponible (la ruta funciona entrando por URL), pero la tarjeta no abre la app
   },
   {
     id: 'bitacora',
