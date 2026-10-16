@@ -128,3 +128,7 @@ Conectada igual que Cartera y Bases: ruta `/solicitudes/` en `gateway/nginx.conf
 ## Tarjetas bloqueadas y orden
 
 El orden de las tarjetas en `gateway/src/apps.js` es el de los proyectos de Coolify (sin el número). Una app con `estado: 'disponible'` y `bloqueada: true` sigue en "Disponibles" pero su tarjeta no abre la app ("Acceso bloqueado", sin enlace). Es solo la tarjeta: la ruta del gateway (`/solicitudes/`, `/bases/`) sigue activa y se puede entrar escribiendo la URL. Hoy están bloqueadas Solicitudes de Contratación y Bases Presupuestales. Para desbloquear una, borrar su línea `bloqueada: true`.
+
+## Diseño de la landing
+
+La landing usa la misma identidad que las apps (Solicitudes, Cartera, RR.HH., Bases): `gateway/src/tokens.css` es copia de la de las apps, Inter alojada (`@fontsource-variable/inter`, sin Google Fonts), barra azul marino con el logo en silueta blanca, tarjetas blancas con borde suave, campo de búsqueda de 44 px e insignias de estado. Si cambian los tokens de las apps, copiar de nuevo `tokens.css`.
