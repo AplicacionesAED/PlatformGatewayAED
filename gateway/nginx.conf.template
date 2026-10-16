@@ -112,6 +112,24 @@ server {
         proxy_cookie_path / /cartera/;
     }
 
+    # --- Bases Presupuestales ---
+    # Mismo patron que Cartera: BASES_UPSTREAM es el DOMINIO PUBLICO de Bases en
+    # Coolify (sin https://). Bases ya soporta el prefijo (build-arg
+    # VITE_BASE_PATH=/bases/; la API queda en /bases/api/v1).
+    location /bases/ {
+        # La API de Bases exporta presupuestos a Excel: puede tardar mas que los 60 s por defecto.
+        proxy_read_timeout 120s;
+        proxy_send_timeout 120s;
+        proxy_pass https://${BASES_UPSTREAM}/;
+        proxy_http_version 1.1;
+        proxy_ssl_server_name on;
+        proxy_set_header Host ${BASES_UPSTREAM};
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cookie_path / /bases/;
+    }
+
     # --- Los demas proyectos se agregan aca con el mismo patron, uno por
     #     uno, a medida que se conecten al gateway (copiar el bloque de
     #     /cartera/, cambiar el nombre de la variable de upstream).
