@@ -112,6 +112,26 @@ server {
         proxy_cookie_path / /cartera/;
     }
 
+    # --- Solicitudes de Contratacion ---
+    # Mismo patron que Cartera: SOLICITUDES_UPSTREAM es el DOMINIO PUBLICO de la app en Coolify (sin
+    # https://). La app ya soporta el prefijo (build-arg VITE_BASE_PATH=/solicitudes/; la API queda en
+    # /solicitudes/api, y el callback de Microsoft en /solicitudes/api/auth/azure/callback).
+    location /solicitudes/ {
+        # Subida de archivos (multer, limite de la app: 20 MB); el default de nginx (1 MB) daria 413.
+        client_max_body_size 20m;
+        # Sync de terceros con SharePoint y generacion de documentos pueden pasar de los 60 s por defecto.
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+        proxy_pass https://${SOLICITUDES_UPSTREAM}/;
+        proxy_http_version 1.1;
+        proxy_ssl_server_name on;
+        proxy_set_header Host ${SOLICITUDES_UPSTREAM};
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cookie_path / /solicitudes/;
+    }
+
     # --- Bases Presupuestales ---
     # Mismo patron que Cartera: BASES_UPSTREAM es el DOMINIO PUBLICO de Bases en
     # Coolify (sin https://). Bases ya soporta el prefijo (build-arg
