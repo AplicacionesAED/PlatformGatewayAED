@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ArrowUpRight, Clock, Search } from 'lucide-react';
+import { ArrowUpRight, Clock, Lock, Search } from 'lucide-react';
 import { APPS } from './apps.js';
 import styles from './App.module.css';
 
@@ -10,6 +10,8 @@ function normalizar(texto) {
 function AppCard({ app }) {
   const Icono = app.icono;
   const disponible = app.estado === 'disponible';
+  // Bloqueada: figura como disponible pero la tarjeta no abre la app (se sigue pudiendo entrar por URL).
+  const bloqueada = disponible && app.bloqueada;
 
   const contenido = (
     <>
@@ -33,7 +35,12 @@ function AppCard({ app }) {
         <p className={styles.cardText}>{app.descripcion}</p>
       </div>
       <div className={styles.cardFoot}>
-        {disponible ? (
+        {bloqueada ? (
+          <>
+            <span>Acceso bloqueado</span>
+            <Lock size={15} strokeWidth={2.2} aria-hidden="true" />
+          </>
+        ) : disponible ? (
           <>
             <span>Abrir aplicación</span>
             <ArrowUpRight size={16} strokeWidth={2.2} className={styles.arrow} aria-hidden="true" />
@@ -45,7 +52,7 @@ function AppCard({ app }) {
     </>
   );
 
-  if (disponible) {
+  if (disponible && !bloqueada) {
     return (
       <a className={`${styles.card} ${styles.cardLive}`} href={app.href}>
         {contenido}

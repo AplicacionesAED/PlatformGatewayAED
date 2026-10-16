@@ -124,3 +124,7 @@ Conectada igual que Cartera y Bases: ruta `/solicitudes/` en `gateway/nginx.conf
 1. Solicitudes: build-arg `VITE_BASE_PATH=/solicitudes/` y variables `FRONTEND_URL=https://portal.aed-it.com/solicitudes`, `CORS_ORIGIN=https://portal.aed-it.com`, `AZURE_REDIRECT_URI=https://portal.aed-it.com/solicitudes/api/auth/azure/callback`; redeployar.
 2. Azure: registrar ese `AZURE_REDIRECT_URI` como Redirect URI tipo "Web" en el App Registration (sin esto el login con Microsoft falla con `AADSTS50011`; el login por contraseña sigue funcionando).
 3. Gateway: definir `SOLICITUDES_UPSTREAM` (dominio público de Solicitudes, sin `https://`) **antes** de redeployar el gateway.
+
+## Tarjetas bloqueadas y orden
+
+El orden de las tarjetas en `gateway/src/apps.js` es el de los proyectos de Coolify (sin el número). Una app con `estado: 'disponible'` y `bloqueada: true` sigue en "Disponibles" pero su tarjeta no abre la app ("Acceso bloqueado", sin enlace). Es solo la tarjeta: la ruta del gateway (`/solicitudes/`, `/bases/`) sigue activa y se puede entrar escribiendo la URL. Hoy están bloqueadas Solicitudes de Contratación y Bases Presupuestales. Para desbloquear una, borrar su línea `bloqueada: true`.
