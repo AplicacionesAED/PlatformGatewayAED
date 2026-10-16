@@ -98,10 +98,9 @@ export default function App() {
 
   return (
     <>
-      <div className={styles.accent} aria-hidden="true" />
       <header className={styles.header}>
         <div className={styles.headerInner}>
-          <img className={styles.logo} src="/aed-logo.png" alt="AED" />
+          <img className={styles.logo} src={`${import.meta.env.BASE_URL}aed-logo.png`} alt="AED" />
           <span className={styles.divider} aria-hidden="true" />
           <span className={styles.product}>Plataforma</span>
         </div>
@@ -109,13 +108,10 @@ export default function App() {
 
       <main className={styles.main}>
         <section className={styles.hero}>
-          <p className={styles.eyebrow}>Portal corporativo</p>
-          <h1 className={styles.title}>
-            Todas las aplicaciones de AED, <span className={styles.titleAccent}>en un solo lugar</span>
-          </h1>
+          <h1 className={styles.title}>Aplicaciones de AED</h1>
           <p className={styles.lead}>
-            Accede a cada módulo con un único punto de entrada. Las nuevas aplicaciones se irán
-            habilitando aquí a medida que estén listas.
+            Un único punto de entrada a cada módulo. Las nuevas aplicaciones se irán habilitando aquí a medida que
+            estén listas.
           </p>
 
           <div className={styles.toolbar}>
