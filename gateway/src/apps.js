@@ -42,7 +42,8 @@ export const APPS = [
     area: 'Finanzas',
     descripcion: 'Construcción y control de bases de presupuesto de obra.',
     icono: Calculator,
-    estado: 'proximamente',
+    estado: 'disponible',
+    href: '/bases/',
   },
   {
     id: 'bitacora',

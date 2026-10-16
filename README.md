@@ -106,3 +106,12 @@ hasta 50 MB y sincroniza con Zoho/HubSpot), tarjeta en `src/apps.js` y servicio
    (`${CARTERA_UPSTREAM}` queda vacio en el `proxy_pass`).
 3. Cartera: `CORS_ORIGIN` ya no importa para el acceso por el gateway (mismo
    origen), pero mantenerlo en el dominio del gateway si se accede por ahi.
+
+## Bases Presupuestales
+
+Conectada igual que Cartera: ruta `/bases/` en `gateway/nginx.conf.template`, tarjeta `disponible` en `gateway/src/apps.js`. La app se compila con `VITE_BASE_PATH=/bases/` (su API queda en `/bases/api/v1`).
+
+**Orden de despliegue en Coolify (importante):**
+1. Desplegar Bases (build-arg `VITE_BASE_PATH=/bases/`) y copiar su dominio público.
+2. Gateway: definir la variable `BASES_UPSTREAM` (dominio público de Bases, sin `https://`) **antes** de redeployar el gateway. Sin ella nginx no arranca y se cae todo el portal.
+3. Redeployar el gateway y probar `https://portal.aed-it.com/bases/`.
