@@ -115,3 +115,12 @@ Conectada igual que Cartera: ruta `/bases/` en `gateway/nginx.conf.template`, ta
 1. Desplegar Bases (build-arg `VITE_BASE_PATH=/bases/`) y copiar su dominio público.
 2. Gateway: definir la variable `BASES_UPSTREAM` (dominio público de Bases, sin `https://`) **antes** de redeployar el gateway. Sin ella nginx no arranca y se cae todo el portal.
 3. Redeployar el gateway y probar `https://portal.aed-it.com/bases/`.
+
+## Solicitudes de Contratación
+
+Conectada igual que Cartera y Bases: ruta `/solicitudes/` en `gateway/nginx.conf.template` (con `client_max_body_size 20m` por las subidas) y tarjeta `disponible` en `gateway/src/apps.js`. La app se compila con `VITE_BASE_PATH=/solicitudes/`.
+
+**Orden de despliegue en Coolify (importante):**
+1. Solicitudes: build-arg `VITE_BASE_PATH=/solicitudes/` y variables `FRONTEND_URL=https://portal.aed-it.com/solicitudes`, `CORS_ORIGIN=https://portal.aed-it.com`, `AZURE_REDIRECT_URI=https://portal.aed-it.com/solicitudes/api/auth/azure/callback`; redeployar.
+2. Azure: registrar ese `AZURE_REDIRECT_URI` como Redirect URI tipo "Web" en el App Registration (sin esto el login con Microsoft falla con `AADSTS50011`; el login por contraseña sigue funcionando).
+3. Gateway: definir `SOLICITUDES_UPSTREAM` (dominio público de Solicitudes, sin `https://`) **antes** de redeployar el gateway.

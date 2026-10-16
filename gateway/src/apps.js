@@ -25,7 +25,8 @@ export const APPS = [
     area: 'Contratación',
     descripcion: 'Contratación directa e indirecta con flujo de aprobación.',
     icono: FileSignature,
-    estado: 'proximamente',
+    estado: 'disponible',
+    href: '/solicitudes/',
   },
   {
     id: 'cartera',
