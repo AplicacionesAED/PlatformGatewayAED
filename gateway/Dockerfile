@@ -15,6 +15,7 @@ RUN npm run build
 # Coolify, solo cambian las env vars.
 FROM nginx:1.27-alpine
 
+COPY security-headers.conf /etc/nginx/snippets/security-headers.conf
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /app/dist /usr/share/nginx/html
 

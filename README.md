@@ -132,3 +132,11 @@ El orden de las tarjetas en `gateway/src/apps.js` es el de los proyectos de Cool
 ## Diseño de la landing
 
 La landing usa la misma identidad que las apps (Solicitudes, Cartera, RR.HH., Bases): `gateway/src/tokens.css` es copia de la de las apps, Inter alojada (`@fontsource-variable/inter`, sin Google Fonts), barra azul marino con el logo en silueta blanca, tarjetas blancas con borde suave, campo de búsqueda de 44 px e insignias de estado. Si cambian los tokens de las apps, copiar de nuevo `tokens.css`.
+
+## Cabeceras de seguridad (2026-10-27)
+
+`gateway/security-headers.conf` define HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy y
+Permissions-Policy para todo el portal (landing y apps). Las cabeceras equivalentes que mande una app se ocultan
+(`proxy_hide_header`) para que mande solo la politica del gateway. CSP: todo `'self'` (las apps no cargan recursos externos),
+`style-src 'unsafe-inline'` por los estilos en linea de React/ApexCharts, `img-src data: blob:`. Si una app necesita un
+origen externo (CDN, iframe, Google Drive embebido), agregarlo ahi y redeployar el gateway.
